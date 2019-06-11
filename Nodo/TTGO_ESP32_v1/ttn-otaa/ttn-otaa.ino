@@ -70,7 +70,7 @@ const unsigned TX_INTERVAL = 60;
 
 #ifdef OLED
 // the OLED used
-U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8 (/* clock=*/ 15, /* data=*/ 4, /* reset=*/ 16);
+U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8 (/* clock=*/ OLED_SCL, /* data=*/ OLED_SDA, /* reset=*/ OLED_RST);
 #endif //OLED
 
 void onLmicEvent (ev_t ev) {

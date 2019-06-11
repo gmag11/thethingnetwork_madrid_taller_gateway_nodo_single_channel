@@ -41,7 +41,7 @@
 #if OLED == 1
 #include <U8x8lib.h>
  // the OLED used
-U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8 (/* clock=*/ 15, /* data=*/ 4, /* reset=*/ 16);
+U8X8_SSD1306_128X64_NONAME_SW_I2C u8x8 (/* clock=*/ OLED_SCL, /* data=*/ OLED_SDA, /* reset=*/ OLED_RST);
 #endif // OLED
 
 #if 1
@@ -75,7 +75,7 @@ static osjob_t sendjob;
 
 // Schedule TX every this many seconds (might become longer due to duty
 // cycle limitations).
-const unsigned TX_INTERVAL = 300;
+const unsigned TX_INTERVAL = 45;
 
 // Pin mapping for TTGO ESP32 v1
 const lmic_pinmap lmic_pins = {
@@ -208,8 +208,14 @@ void onEvent (ev_t ev) {
 		u8x8.drawString (0, 7, "EV_LINK_ALIVE");
 #endif // OLED
 		break;
+	case EV_TXSTART:
+		Serial.println (F ("EV_TXSTART"));
+#if OLED == 1
+		u8x8.drawString (0, 7, "EV_TXSTART");
+#endif // OLED
+		break;
 	default:
-		Serial.println (F ("Unknown event"));
+		Serial.printf ("Unknown event %d\n", ev);
 #if OLED == 1
 		u8x8.setCursor (0, 7);
 		u8x8.printf ("UNKNOWN EVENT %d", ev);
