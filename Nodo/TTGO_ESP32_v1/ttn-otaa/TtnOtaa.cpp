@@ -11,10 +11,10 @@ void onEvent (ev_t ev) { TtnOtaa.onEvent (ev); }
 
 // Pin mapping for TTGO ESP32 v1
 const lmic_pinmap lmic_pins = {
-	.nss = 18,
+	.nss = LORA_CS ,
 	.rxtx = LMIC_UNUSED_PIN,
-	.rst = 14,
-	.dio = {/*dio0*/ 26, /*dio1*/ 33, /*dio2*/ 32 }
+	.rst = LORA_RST,
+	.dio = {/*dio0*/ LORA_IRQ , /*dio1*/ 33, /*dio2*/ 32 }
 };
 
 void TTNotaa::begin (const u1_t appeui[8], const u1_t deveui[8], const u1_t appkey[16])
